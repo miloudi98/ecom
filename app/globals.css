@@ -1,0 +1,20 @@
+:root {
+	--dark-color-hex: #0A0E14;
+	--orange-color-hex: #FF7733;
+	--white-color-hex: #E6E1CF;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+html body {
+	background-color: var(--dark-color-hex);
+}
