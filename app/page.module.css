@@ -25,6 +25,10 @@
 	color: var(--orange-color-hex);
 }
 
+.bg_orange {
+	background-color: var(--orange-color-hex);
+}
+
 .white {
 	color: var(--white-color-hex);
 }
