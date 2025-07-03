@@ -7,8 +7,36 @@ import css from "./page.module.css";
 
 import { FaShoppingCart } from "react-icons/fa";
 import { useState } from "react";
+import { useGlobalState } from "./GlobalStateContext";
 
-const CartIcon = ({ count }) => {
+export const SearchBox = () => {
+  const [query, setQuery] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Do something with the search term
+    console.log("Searching for:", query);
+    // For example: navigate, filter, etc.
+    setQuery("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="d-flex">
+      <input
+        type="search"
+        className="form-control text-reset me-4"
+	style={{ backgroundColor: "var(--dark-color-hex)" }}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <button className="btn btn-dark" type="submit">
+        Search
+      </button>
+    </form>
+  );
+}
+
+export const CartIcon = ({ count }) => {
 	return (
 		<div className="position-relative d-inline-block">
 			<FaShoppingCart size={32} style={{ color: "#FF7733"}} />
@@ -22,7 +50,8 @@ const CartIcon = ({ count }) => {
 	);
 };
 
-const NavBar = ({cartCount}) => {
+export const NavBar = () => {
+	const { cartCount } = useGlobalState();
 	return (
 		<nav className="d-flex justify-content-between align-items-center border-dark border p-3">
 			<div className="d-flex align-items-center gap-4">
@@ -34,7 +63,7 @@ const NavBar = ({cartCount}) => {
 	);
 };
 
-const HeroSection = () => {
+export const HeroSection = () => {
 	return (
 		<div className="border-start border-end border-dark h-100">
 			<div className={`text-center ${css.white}`}>
@@ -57,7 +86,7 @@ const HeroSection = () => {
 						<img src="/computer_parts_3.png" style={{width: 'auto', height: '90px'}} />
 					</div>
 					<div className={`col-12 mt-5 text-center ${css.white}`}>
-						<a href="#" className="text-decoration-none btn btn-primary">  Explore PC parts </a>
+						<a href="/buy" className="text-decoration-none btn btn-primary">  Explore PC parts </a>
 					</div>
 				</div>
 				
@@ -75,7 +104,7 @@ const HeroSection = () => {
 						<img src="/computer_parts_7.png" style={{width: 'auto', height: '90px'}} />
 					</div>
 					<div className={`col-12 mt-5 text-center ${css.white}`}>
-						<a href="#" className="btn btn-primary text-decoration-none"> Explore pre-built PCs </a>
+						<a href="/buy" className="btn btn-primary text-decoration-none"> Explore pre-built PCs </a>
 					</div>
 				</div>
 			</div>
@@ -83,14 +112,14 @@ const HeroSection = () => {
 	);
 };
 
-const ActionBar = () => {
+export const ActionBar = () => {
 	return (
 		<div className={`d-flex border-bottom border-dark ${css.white} ${css.source_med} border-light`}>
 			<div className="border-start border-dark p-3">
-				<a href="#" id="pcparts" className={`text-reset text-decoration-none `}>PC Parts</a>
+				<a href="/buy" id="pcparts" className={`text-reset text-decoration-none `}>PC Parts</a>
 			</div>	
 			<div className="border-start border-dark border-end border-dark p-3">
-				<a href="#" className={`text-reset text-decoration-none `}>Pre-Builts</a>
+				<a href="/buy" className={`text-reset text-decoration-none `}>Pre-Builts</a>
 			</div>
 			<div className="flex-fill border-end border-dark">
 			</div>	
@@ -99,11 +128,10 @@ const ActionBar = () => {
 };
 
 export default function Home() {
-	const [cartCount, setCartCount] = useState(0);
 
 	return (
 		<div className="container h-100">
-			<NavBar cartCount={cartCount} />
+			<NavBar />
 			<ActionBar />
 			<HeroSection />
 		</div>
