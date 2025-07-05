@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	basePath: '/pcbuilder',
-	assertPrefix: '/pcbuilder'
+	assetPrefix: '/pcbuilder'
 };
 
 export default nextConfig;
