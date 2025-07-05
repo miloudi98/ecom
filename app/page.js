@@ -55,10 +55,10 @@ export const NavBar = () => {
 
 	return (
 		<nav className="d-flex justify-content-between align-items-center border-dark border p-3">
-			<div className="d-flex align-items-center gap-4">
+			<a href="/" className="d-flex text-decoration-none align-items-center gap-4">
 				<img src="/computer.png" className={`${css.logo_image}`} />
 				<span className={`${css.source_bold} ${css.white}`}> PCBuilder </span>
-			</div>
+			</a>
 			<CartIcon count={cartCount} />
 		</nav>
 	);
