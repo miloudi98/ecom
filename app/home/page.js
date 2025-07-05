@@ -208,7 +208,7 @@ const ShippingForm = ({handleNext}) => {
 
 const CPUs = [
   {
-		imageURL: "/computer_parts.png",
+		imageURL: "/pcbuilder/computer_parts.png",
     name: "Intel Core i9-13900K",
     properties: {
       "Cores": "24",
@@ -220,7 +220,7 @@ const CPUs = [
     }
   },
   {
-		imageURL: "/computer_parts.png",
+		imageURL: "/pcbuilder/computer_parts.png",
     name: "AMD Ryzen 9 7950X",
     properties: {
       "Cores": "16",
@@ -232,7 +232,7 @@ const CPUs = [
     }
   },
   {
-		imageURL: "/computer_parts.png",
+		imageURL: "/pcbuilder/computer_parts.png",
     name: "Intel Core i5-13600K",
     properties: {
       "Cores": "14",
@@ -247,7 +247,7 @@ const CPUs = [
 
 const GPUs = [
   {
-		imageURL: "/computer_parts_1.png",
+		imageURL: "/pcbuilder/computer_parts_1.png",
     name: "NVIDIA GeForce RTX 4090",
     properties: {
       "Memory": "24GB GDDR6X",
@@ -258,7 +258,7 @@ const GPUs = [
     }
   },
   {
-		imageURL: "/computer_parts_1.png",
+		imageURL: "/pcbuilder/computer_parts_1.png",
     name: "AMD Radeon RX 7900 XTX",
     properties: {
       "Memory": "48GB GDDR6",
@@ -269,7 +269,7 @@ const GPUs = [
     }
   },
   {
-		imageURL: "/computer_parts_1.png",
+		imageURL: "/pcbuilder/computer_parts_1.png",
     name: "NVIDIA GeForce RTX 4070 Ti",
     properties: {
       "Memory": "12GB GDDR6X",
@@ -283,7 +283,7 @@ const GPUs = [
 
 const Motherboards = [
   {
-		imageURL: "/computer_parts_3.png",
+		imageURL: "/pcbuilder/computer_parts_3.png",
     name: "ASUS ROG Strix Z790-E Gaming",
     properties: {
       "Form Factor": "ATX",
@@ -294,7 +294,7 @@ const Motherboards = [
     }
   },
   {
-		imageURL: "/computer_parts_3.png",
+		imageURL: "/pcbuilder/computer_parts_3.png",
     name: "MSI MAG B650 Tomahawk WiFi",
     properties: {
       "Form Factor": "ATX",
@@ -305,7 +305,7 @@ const Motherboards = [
     }
   },
   {
-		imageURL: "/computer_parts_3.png",
+		imageURL: "/pcbuilder/computer_parts_3.png",
     name: "Gigabyte B550 AORUS Elite",
     properties: {
       "Form Factor": "ATX",
@@ -319,7 +319,7 @@ const Motherboards = [
 
 const HardDrives = [
   {
-		imageURL: "/computer_parts_2.png",
+		imageURL: "/pcbuilder/computer_parts_2.png",
     name: "Samsung 980 PRO 1TB NVMe SSD",
     properties: {
       "Type": "NVMe SSD",
@@ -330,7 +330,7 @@ const HardDrives = [
     }
   },
   {
-		imageURL: "/computer_parts_2.png",
+		imageURL: "/pcbuilder/computer_parts_2.png",
     name: "Western Digital Black 2TB HDD",
     properties: {
       "Type": "HDD",
@@ -343,7 +343,7 @@ const HardDrives = [
     }
   },
   {
-		imageURL: "/computer_parts_2.png",
+		imageURL: "/pcbuilder/computer_parts_2.png",
     name: "Crucial MX500 1TB SSD",
     properties: {
       "Type": "SATA SSD",
