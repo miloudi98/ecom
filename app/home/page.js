@@ -28,7 +28,7 @@ function OrderSurvey() {
     setFeedback("");
 		setShowSuccessMessage(true);
 		setTimeout(() => {
-			window.location.href = "/";
+			window.location.href = "/pcbuilder";
 		}, 3000);
   };
 
