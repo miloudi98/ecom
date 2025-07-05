@@ -5,6 +5,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import { useState, useEffect } from "react";
 
+import { NavBar } from "../page.js";
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -13,7 +15,196 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const steps = ['Pick item', 'Enter payment details', 'Checkout'];
+const steps = ['Pick item', 'Enter payment details', 'Enter shipping information', 'Checkout'];
+
+function OrderSurvey() {
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+	const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setRating(0);
+    setFeedback("");
+		setShowSuccessMessage(true);
+		setTimeout(() => {
+			window.location.href = "/";
+		}, 3000);
+  };
+
+  return (
+    <form className="mt-4" onSubmit={handleSubmit}>
+      <h5>We value your feedback!</h5>
+
+      <div className="mb-3">
+        <label className="form-label">How satisfied are you with your order?</label>
+        <div>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              type="button"
+              key={star}
+              className={`btn btn-sm ${star <= rating ? "btn-warning" : "btn-outline-secondary"} me-1`}
+              onClick={() => setRating(star)}
+            >
+              ★
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Additional Comments (optional)</label>
+        <textarea
+          className="form-control"
+          rows="3"
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+          placeholder="Tell us what you think..."
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary">
+        Submit Feedback
+      </button>
+
+		{ showSuccessMessage && (
+			<div className="alert alert-info text-center mt-4" role="alert">
+				<h4 className="alert-heading">Thank you for your valuable feedback</h4>
+				<p>We will try to work on it in the future!</p>
+				<hr />
+				<p className="mb-0">You will be redirected to the home page soon!</p>
+			</div>
+			)
+		}
+    </form>
+  );
+}
+
+
+const ShippingForm = ({handleNext}) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    country: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Shipping information submitted:", formData);
+    // You would send this data to your backend here
+  };
+
+  return (
+    <form className="p-4 bg-light rounded" onSubmit={handleNext}>
+      <h4 className="mb-3">Shipping Information</h4>
+
+      <div className="mb-3">
+        <label className="form-label">Full Name</label>
+        <input
+          type="text"
+          className="form-control"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="John Doe"
+          required
+        />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Address Line 1</label>
+        <input
+          type="text"
+          className="form-control"
+          name="address1"
+          value={formData.address1}
+          onChange={handleChange}
+          placeholder="123 Main St"
+          required
+        />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Address Line 2 (optional)</label>
+        <input
+          type="text"
+          className="form-control"
+          name="address2"
+          value={formData.address2}
+          onChange={handleChange}
+          placeholder="Apartment, suite, etc."
+        />
+      </div>
+
+      <div className="row">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">City</label>
+          <input
+            type="text"
+            className="form-control"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="col-md-3 mb-3">
+          <label className="form-label">State / Province</label>
+          <input
+            type="text"
+            className="form-control"
+            name="state"
+            value={formData.state}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="col-md-3 mb-3">
+          <label className="form-label">Postal Code</label>
+          <input
+            type="text"
+            className="form-control"
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Country</label>
+        <input
+          type="text"
+          className="form-control"
+          name="country"
+          value={formData.country}
+          onChange={handleChange}
+          placeholder="United States"
+          required
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary w-100">
+        Submit Shipping Info
+      </button>
+    </form>
+  );
+}
 
 const CPUs = [
   {
@@ -252,7 +443,7 @@ const ProductContainer = () => {
 		}
 		if (productKind === "mbs") {
 			setProductsShown(
-					MotherBoards.filter((product) => 
+					Motherboards.filter((product) => 
 							Object.entries(filters).every(([key, value]) => value === "" || value === product.properties[key])));
 		}
 		if (productKind === "hdd") {
@@ -307,9 +498,25 @@ const ProductContainer = () => {
     setActiveStep(0);
   };
 
+  const [formData, setFormData] = useState({
+    name: "",
+    cardNumber: "",
+    expiry: "",
+    cvv: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
 	return (
 		<div className="container">
 			{ /* Show a stepper */ }
+			<div className="mt-5"></div>
 			<Box sx={{ width: '100%' }}>
 				<Stepper activeStep={activeStep}>
 					{steps.map((label, index) => {
@@ -457,9 +664,93 @@ const ProductContainer = () => {
 
 { activeStep === 1 && (
 		<>
-		<h2> Enter Payment information </h2>
-		</>
+		    <form className="p-4 bg-light rounded" onSubmit={handleNext}>
+      <h4 className="mb-3">Payment Information</h4>
+
+      <div className="mb-3">
+        <label className="form-label">Cardholder Name</label>
+        <input
+          type="text"
+          className="form-control"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="John Doe"
+          required
+        />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Card Number</label>
+        <input
+          type="text"
+          className="form-control"
+          name="cardNumber"
+          value={formData.cardNumber}
+          onChange={handleChange}
+          placeholder="1234 5678 9012 3456"
+          required
+          pattern="\d{13,19}"
+          title="Enter a valid card number"
+        />
+      </div>
+
+      <div className="row">
+        <div className="col-md-6 mb-3">
+          <label className="form-label">Expiry Date</label>
+          <input
+            type="text"
+            className="form-control"
+            name="expiry"
+            value={formData.expiry}
+            onChange={handleChange}
+            placeholder="MM/YY"
+            required
+            pattern="(0[1-9]|1[0-2])\/\d{2}"
+            title="Format: MM/YY"
+          />
+        </div>
+        <div className="col-md-6 mb-3">
+          <label className="form-label">CVV</label>
+          <input
+            type="text"
+            className="form-control"
+            name="cvv"
+            value={formData.cvv}
+            onChange={handleChange}
+            placeholder="123"
+            required
+            pattern="\d{3,4}"
+            title="3 or 4 digit CVV"
+          />
+        </div>
+      </div>
+
+      <button type="submit" className="btn btn-primary w-100">
+        Submit Payment
+      </button>
+    </form></>
 )}
+
+{ activeStep === 2 && (
+	<>
+		<ShippingForm handleNext={handleNext} />
+	</>
+)}
+
+{ activeStep === 3 && (
+	<>
+    <div className="alert alert-success text-center mt-4" role="alert">
+      <h4 className="alert-heading">🎉 Thank you for your order!</h4>
+      <p>Your order is on its way and will be delivered soon.</p>
+      <hr />
+      <p className="mb-0">You will receive a confirmation email with the tracking details shortly.</p>
+    </div>
+
+		<OrderSurvey />
+	</>
+)}
+
 		</div>
 	);
 };
@@ -467,6 +758,7 @@ const ProductContainer = () => {
 export default function Home() {
 	return (
 		<>
+			<NavBar />
 			<ProductContainer />
 		</>
 	);
